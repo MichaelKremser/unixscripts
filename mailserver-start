@@ -1,0 +1,5 @@
+#!/bin/sh
+service postfix start
+service courier-authdaemon start
+service courier-imap start
+service courier-imap-ssl start
