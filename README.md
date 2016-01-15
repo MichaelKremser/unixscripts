@@ -4,4 +4,14 @@ This repository contains various scripts for Unix-like-Systems (including GNU, e
 
 # Installation #
 
+You can either use git to fetch all of the scripts or use wget to download specific scripts (but then you have to track updates yourself).
+
+## git ##
+
 First you need git software on the system. In Debian and derivates it's enough to install package "git" using "apt-get install git".
+
+## wget ##
+
+You can use any other download program of course, like curl and so on. Even your browser can do a good job. ;-)
+
+https://raw.githubusercontent.com/MichaelKremser/unixscripts/master/do-upgrade
