@@ -10,9 +10,7 @@ You can either use git to fetch all of the scripts or use wget to download speci
 
 First you need git software on the system. In Debian and derivates it's enough to install package "git" using "apt-get install git".
 
-git clone https://github.com/MichaelKremser/unixscripts.git
-cd unixscripts
-chmod -v +x *
+git clone https://github.com/MichaelKremser/unixscripts.git && cd unixscripts && chmod -v +x *
 
 ## wget ##
 
