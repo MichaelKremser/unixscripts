@@ -1,0 +1,6 @@
+#!/bin/sh
+/usr/bin/tail -15 /var/log/auth.log > /tmp/authvnstat.txt
+/usr/bin/tail -15 /var/log/mail.log >> /tmp/authvnstat.txt
+vnstat -i eth0 | tail -6  >> /tmp/authvnstat.txt
+uptime >> /tmp/authvnstat.txt
+send-xmpp-mk "$(cat /tmp/authvnstat.txt)"
