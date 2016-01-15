@@ -1,0 +1,5 @@
+#!/bin/sh
+service courier-imap-ssl stop
+service courier-imap stop
+service courier-authdaemon stop
+service postfix stop
