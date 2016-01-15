@@ -1,12 +1,16 @@
 #!/bin/sh
 # Install essential programs on Debian systems. Adapt to your needs. Install what you need.
 # Editor, file manager, pager, and so on
-apt-get install git wget curl screen aptitude nano espeak sendxmpp mc less procps man
+apt-get install git wget curl screen aptitude nano espeak sendxmpp mc less procps man ntpdate
 # Network programs
-apt-get install iputils-ping iputils-tracepath oping bind9-host vnstat vnstati nmap iptables ipset telnet whois dnsutils 6tunnel netcat6
+apt-get install iputils-ping iputils-tracepath oping bind9-host vnstat vnstati
+apt-get install nmap iptables ipset ebtables telnet whois dnsutils 6tunnel netcat6
 # Web (most probably you wouldn't install all of them)
 apt-get install lighttpd nginx apache2 squid3 nodejs
+apt-get install mono-apache-server4 libapache2-mod-php5 libapache2-mod-php7.0
 # Other servers
-apt-get install samba dnsmasq bind9 isc-dhcp-server hostapd vsftpd
+apt-get install samba cups vsftpd dnsmasq bind9 isc-dhcp-server hostapd redis-server ntp
 # Multimedia programs
 apt-get install imagemagick ffmpeg ffmpeg2theora libav-tools mencoder
+# Programming languages (support for scripts/programs that need it)
+apt-get install python3 openjdk-9-jre-headless ruby erlang mono-runtime
