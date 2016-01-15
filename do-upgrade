@@ -1,0 +1,10 @@
+#!/bin/sh
+# Upgrade systems that use APT (Debian, Ubuntu, siduction...)
+# Just uncomment lines that don't make sense for you (for instance, espeak won't make sense on a server in most cases)
+# If ran in a SSH session, it's strongly recommended to use screen! Really, I mean it: install screen! You've been warned.
+apt-get update
+aptitude -y full-upgrade
+echo "Finished $(date '+%F %T')"
+send-xmpp-mk "Updating $(hostname) finished @ `date '+%F %T'`" 
+send-xmpp-mk "$(tail -2 /var/log/apt/history.log)"
+espeak -v en -s 10 "Updating $(hostname) finished"
