@@ -1,0 +1,4 @@
+#!/bin/sh
+# Use encoding as needed
+# mencoder "mf://*.jpg" -mf fps=25 -o $1 -ovc lavc -lavcopts vcodec=msmpeg4v2:vbitrate=1600
+mencoder "mf://*jpg" -mf fps=25 -o $1 -ovc copy
