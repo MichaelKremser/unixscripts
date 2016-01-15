@@ -17,6 +17,9 @@ git clone https://github.com/MichaelKremser/unixscripts.git && cd unixscripts &&
 You can use any other download program of course, like curl and so on. Even your browser can do a good job. ;-)
 
 wget https://raw.githubusercontent.com/MichaelKremser/unixscripts/master/do-upgrade
+
 wget https://raw.githubusercontent.com/MichaelKremser/unixscripts/master/.bashrc
+
 wget https://raw.githubusercontent.com/MichaelKremser/unixscripts/master/deb-install-essentials
+
 wget https://raw.githubusercontent.com/MichaelKremser/unixscripts/master/diskusage
