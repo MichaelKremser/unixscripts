@@ -1,18 +1,20 @@
-#/bin/sh
+#/bin/bash
 OUTPUTDIR=/var/www/html/vnstat
 for iface in $(ifconfig | grep "Link" | awk -F" " '{print $1}'); do
-	echo "Processing $iface";
-	vnstat -i $iface > $OUTPUTDIR/vnstat_$iface.txt
-#	errcnt=$OUTPUTDIR/vnstat_$iface.txt | grep Error | wc -l
-#	echo errcnt = $errcnt
-	vnstati -i $iface -s -o $OUTPUTDIR/vnstat_$iface.png
-	if [[ $? == "0" ]]; then
-		for unit in hours days months; do
-			FILENAME=$OUTPUTDIR/vnstat~$iface~$unit
-			FILENAME=$(sed "s/~/_/g" <<< "$FILENAME")
-			echo $FILENAME
-			vnstat -i $iface --$unit > $FILENAME.txt
-			vnstati -i $iface --$unit -o $FILENAME.png
-		done
+	if [[ $iface != "lo" ]]; then
+		echo "Processing $iface";
+		vnstat -i $iface > $OUTPUTDIR/vnstat_$iface.txt
+#		errcnt=$OUTPUTDIR/vnstat_$iface.txt | grep Error | wc -l
+#		echo errcnt = $errcnt
+		vnstati -i $iface -s -o $OUTPUTDIR/vnstat_$iface.png
+		if [[ $? == "0" ]]; then
+			for unit in hours days months; do
+				FILENAME=$OUTPUTDIR/vnstat~$iface~$unit
+				FILENAME=$(sed "s/~/_/g" <<< "$FILENAME")
+				echo $FILENAME
+				vnstat -i $iface --$unit > $FILENAME.txt
+				vnstati -i $iface --$unit -ru -o $FILENAME.png
+			done
+		fi
 	fi
 done
