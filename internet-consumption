@@ -1,31 +1,42 @@
 #/bin/bash
+# On my system (NetBSD 7.0.1), bash is installed in /usr/pkg/bin/bash. In order to let scripts like this work, execute
+# ln -s $(which bash) /bin/bash
+echo "Writing internet consumption data"
 LANG=C
+# OUTPUTDIR varies on server used (Apache, lighttpd, nginx...)
+#OUTPUTDIR=/srv/www/htdocs/vnstat
 OUTPUTDIR=/var/www/html/vnstat
 vnstat=$(which vnstat)
 if [[ $vnstat == "" ]]; then
-	echo "$0: vnstat is not installed."
-	exit
+        echo "$0: vnstat is not installed."
+        exit
 fi
 vnstati=$(which vnstati) # don't blame if it is not installed, this is optional
-for iface in $(ifconfig | grep "Link encap" | awk -F" " '{print $1}'); do
-	if [[ $iface != "lo" ]]; then
-		echo "Processing $iface";
-		$vnstat -i $iface > $OUTPUTDIR/vnstat_$iface.txt
-#		errcnt=$OUTPUTDIR/vnstat_$iface.txt | grep Error | wc -l
-#		echo errcnt = $errcnt
-		if [[ $vnstati != "" ]]; then
-			$vnstati -i $iface -s -o $OUTPUTDIR/vnstat_$iface.png
-		fi
-		if [[ $? == "0" ]]; then
-			for unit in hours days months; do
-				FILENAME=$OUTPUTDIR/vnstat~$iface~$unit
-				FILENAME=$(sed "s/~/_/g" <<< "$FILENAME")
-				echo $FILENAME
-				$vnstat -i $iface --$unit > $FILENAME.txt
-				if [[ $vnstati != "" ]]; then
-					$vnstati -i $iface --$unit -ru -o $FILENAME.png
-				fi
-			done
-		fi
-	fi
+OSTYPE=$(uname)
+if [[ $OSTYPE == "NetBSD" ]]; then
+        INTERFACES=$(ifconfig | grep "UP" | awk -F" " '{print $1}' | sed "s/://g")
+fi
+if [[ $OSTYPE == "Linux" ]]; then
+        INTERFACES=$(ifconfig | grep "Link encap" | awk -F" " '{print $1}')
+fi
+#echo $INTERFACES
+for iface in $INTERFACES; do
+        if [[ $iface != "lo" && $iface != 'lo0' ]]; then
+                echo "Processing $iface";
+                $vnstat -i $iface > $OUTPUTDIR/vnstat_$iface.txt
+                if [[ $vnstati != "" ]]; then
+                        $vnstati -i $iface -s -o $OUTPUTDIR/vnstat_$iface.png
+                fi
+                if [[ $? == "0" ]]; then
+                        for unit in hours days months; do
+                                FILENAME=$OUTPUTDIR/vnstat~$iface~$unit
+                                FILENAME=$(sed "s/~/_/g" <<< "$FILENAME")
+                                echo $FILENAME
+                                $vnstat -i $iface --$unit > $FILENAME.txt
+                                if [[ $vnstati != "" ]]; then
+                                        $vnstati -i $iface --$unit -ru -o $FILENAME.png
+                                fi
+                        done
+                fi
+        fi
 done
