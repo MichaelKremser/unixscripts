@@ -1,0 +1,5 @@
+#!/bin/sh
+# If system is quite slow because it has to access swap quite often, but enough memory would be available, turning swap off and on again can help.
+swapon -s
+/usr/bin/time swapoff -a
+swapon -a
