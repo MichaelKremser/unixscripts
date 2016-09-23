@@ -1,0 +1,14 @@
+#!/bin/bash
+echo "STOPWLANAP" >> /var/log/wlanap
+/bin/date '+%a %F %H:%M:%S' >> /var/log/wlanap
+echo "Stopping hostapd, resetting wlan0, restarting DHCP server, SSH and RADV daemon..." >> /var/log/wlanap
+ifconfig wlan0 0.0.0.0 netmask 255.255.255.255
+ifconfig wlan0 del 2001:db8::/64
+service hostapd stop >> /var/log/wlanap
+service radvd stop >> /var/log/wlanap
+rm -v /etc/radvd.conf >> /var/log/wlanap
+cp -v /etc/radvd.conf.eth0.he /etc/radvd.conf >> /var/log/wlanap
+service radvd start >> /var/log/wlanap
+service isc-dhcp-server restart >> /var/log/wlanap
+service ssh restart
+echo "Done." >> /var/log/wlanap
