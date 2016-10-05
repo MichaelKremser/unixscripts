@@ -1,5 +1,5 @@
 #/bin/bash
-# On my system (NetBSD 7.0.1), bash is installed in /usr/pkg/bin/bash. In order to let scripts like this work, execute
+# On my BSD systems, bash is installed in /usr/pkg/bin/bash (NetBSD 7.0.19) and /usr/local/bin/bash (FreeBSD 11). In order to let scripts like this work, execute
 # ln -s $(which bash) /bin/bash
 echo "Writing internet consumption data"
 LANG=C
@@ -13,7 +13,7 @@ if [[ $vnstat == "" ]]; then
 fi
 vnstati=$(which vnstati) # don't blame if it is not installed, this is optional
 OSTYPE=$(uname)
-if [[ $OSTYPE == "NetBSD" ]]; then
+if [[ $OSTYPE == "NetBSD" || $OSTYPE == "FreeBSD" ]]; then
         INTERFACES=$(ifconfig | grep "UP" | awk -F" " '{print $1}' | sed "s/://g")
 fi
 if [[ $OSTYPE == "Linux" ]]; then
