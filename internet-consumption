@@ -13,7 +13,7 @@ if [[ $vnstat == "" ]]; then
 fi
 vnstati=$(which vnstati) # don't blame if it is not installed, this is optional
 OSTYPE=$(uname)
-if [[ $OSTYPE == "NetBSD" || $OSTYPE == "FreeBSD" ]]; then
+if [[ $OSTYPE == "NetBSD" || $OSTYPE == "FreeBSD" || $OSTYPE == "OpenBSD" ]]; then
         INTERFACES=$(ifconfig | grep "UP" | awk -F" " '{print $1}' | sed "s/://g")
 fi
 if [[ $OSTYPE == "Linux" ]]; then
