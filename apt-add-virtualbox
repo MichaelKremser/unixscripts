@@ -1,0 +1,6 @@
+#!/bin/sh
+wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | apt-key add -
+wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | apt-key add -
+RELNAME=$(lsb_release -c | cut -d':' -f2)
+echo "deb http://download.virtualbox.org/virtualbox/debian $RELNAME contrib" > /etc/apt/sources.list.d/virtualbox.list
+apt update
