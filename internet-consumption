@@ -17,7 +17,7 @@ if [[ $OSTYPE == "NetBSD" || $OSTYPE == "FreeBSD" || $OSTYPE == "OpenBSD" ]]; th
         INTERFACES=$(ifconfig | grep "UP" | awk -F" " '{print $1}' | sed "s/://g")
 fi
 if [[ $OSTYPE == "Linux" ]]; then
-        INTERFACES=$(ifconfig | grep "Link encap" | awk -F" " '{print $1}')
+        INTERFACES=$(ifconfig | grep "^[a-z]" | awk -F" " '{print $1}' | sed "s/://g")
 fi
 #echo $INTERFACES
 for iface in $INTERFACES; do
